@@ -5,15 +5,13 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var loginRoute = require("./routes/login");
-var createRoute = require('./routes/create');
-
+var mongodb = require("./config/mongodb");
 var app = express();
-var port = 3030;
+var db;
 
-// view engine setup
+const port = process.env.port || 3030;
+
+// view engine
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -22,12 +20,31 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/login", loginRoute);
-app.use("/create", createRoute);
+// load assets
+app.use("/css", express.static(path.join(__dirname, "public/css")));
+app.use("/js", express.static(path.join(__dirname, "public/js")));
+app.use("/img", express.static(path.join(__dirname, "public/img")));
+
+// load bootstrap
+app.use(express.static(__dirname + "/node_modules/bootstrap/dist/css"));
+
+// import routes
+var index = require("./routes/index");
+
+// load routes
+app.use("/", index);
+// app.use("/inventory", inventory);
+// app.use("/auth", auth);
+
+// connect mongodb
+mongodb.connect();
+
+// make db accessible to router
+app.use(function (req, res, next) {
+  req.db = db;
+  next();
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -45,6 +62,7 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
+// create server
 app.listen(port, () => {
   console.log(`app listening at port: ${port}`);
 });
