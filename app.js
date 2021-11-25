@@ -34,8 +34,6 @@ var index = require("./routes/index");
 
 // load routes
 app.use("/", index);
-// app.use("/inventory", inventory);
-// app.use("/auth", auth);
 
 // connect mongodb
 mongodb.connect();
