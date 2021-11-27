@@ -1,8 +1,7 @@
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 
-const url =
-  "mongodb+srv://new-user_31:admin@cluster0.2kvs5.mongodb.net/miniproject_mini?retryWrites=true&w=majority";
+const url = "";
 
 const connect = async function () {
   try {

@@ -1,0 +1,152 @@
+<h1 class="display-4">Edit inventory</h1>
+<br />
+<div class="card">
+  <div class="card-body">
+    <% inventory.forEach(item=>{%>
+    <form action="/update?_id=<%- item._id %>" method="post">
+      <div class="form-group row">
+        <label for="inv_name" class="col-sm-2 col-form-label"
+          >Inventory Name(*):</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_name"
+            placeholder="Item name"
+            value="<%- item.inv_name %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_manager" class="col-sm-2 col-form-label"
+          >Manager:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_manager"
+            placeholder="Username"
+            value="<%- item.inv_manager %>"
+            disabled
+            readonly
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_type" class="col-sm-2 col-form-label">Type:</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_type"
+            placeholder="Type"
+            value="<%- item.inv_type %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_quantity" class="col-sm-2 col-form-label"
+          >Quantity:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_quantity"
+            placeholder="Quantity"
+            value="<%- item.inv_quantity %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_street" class="col-sm-2 col-form-label">Street:</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_street"
+            placeholder="Street"
+            value="<%- item.inv_street %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_building" class="col-sm-2 col-form-label"
+          >Building:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_building"
+            placeholder="Building"
+            value="<%- item.inv_building %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_country" class="col-sm-2 col-form-label"
+          >Country:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_country"
+            placeholder="Country"
+            value="<%- item.inv_country %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_code" class="col-sm-2 col-form-label">Zip code:</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_code"
+            placeholder="Zip code"
+            value="<%- item.inv_code %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_lat" class="col-sm-2 col-form-label"
+          >GPS Latitude:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_lat"
+            placeholder="Latitude"
+            value="<%- item.inv_lat %>"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inv_lng" class="col-sm-2 col-form-label"
+          >GPS Longitude:</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            name="inv_lng"
+            placeholder="Longitude"
+            value="<%- item.inv_lng %>"
+          />
+        </div>
+      </div>
+
+      <hr class="my-4" />
+
+      <div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+    <%}) %>
+  </div>
+</div>
