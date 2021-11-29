@@ -4,8 +4,22 @@ var router = express.Router();
 const db = require("../config/mongodb");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
+const fs = require("fs");
 
-router.get("/", function (req, res, next) {
+var multer = require("multer");
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/img");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+var upload = multer({ storage: storage });
+
+router.get("/", function (req, res) {
   res.render("index", {
     title: "Express",
     description: "Welcome to EJS",
@@ -13,13 +27,13 @@ router.get("/", function (req, res, next) {
 });
 
 // user auth
-router.get("/signup", function (req, res, next) {
+router.get("/signup", function (req, res) {
   res.render("signup");
 });
 
 router.post("/signup");
 
-router.get("/signin", function (req, res, next) {
+router.get("/signin", function (req, res) {
   res.render("signin");
 });
 
@@ -27,25 +41,54 @@ router.post("/signin");
 
 // mongodb CRUD
 // insert data
-router.get("/create", function (req, res, next) {
-  console.log("get create page");
+router.get("/create", function (req, res) {
   res.render("create");
 });
 
-router.post("/create", function (req, res, next) {
-  var myObj = req.body;
+router.post("/create", upload.single("image"), function (req, res, next) {
+  const file = req.file;
+
+  if (!file) {
+    const error = new Error("Please upload image file.");
+    error.httpStatusCode = 400;
+    return next(error);
+  }
+
+  var img = fs.readFileSync(req.file.path);
+  var encode_image = img.toString("base64");
+
+  var imgObj = {
+    contentType: req.file.mimetype,
+    path: req.file.path,
+    image: new Buffer(encode_image, "base64"),
+  };
+
+  const obj = {
+    item_name: req.body.item,
+    manager: req.body.username,
+    type: req.body.type,
+    quantity: req.body.quantity,
+    address: {
+      street: req.body.street,
+      building: req.body.building,
+      country: req.body.country,
+      postcode: req.body.postcode,
+      coordinate: [req.body.lat, req.body.lng],
+    },
+    img: imgObj,
+  };
 
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
     const db = client.db("miniproject_db");
 
     db.collection("inventory").insertOne(
-      myObj,
+      obj,
       {
         safe: true,
       },
       function (err, result) {
-        if (err) return console.log(err);
+        if (err) throw err;
         client.close;
         res.redirect("/home");
       }
@@ -54,7 +97,7 @@ router.post("/create", function (req, res, next) {
 });
 
 // get all
-router.get("/home", function (req, res, next) {
+router.get("/home", function (req, res) {
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
     const db = client.db("miniproject_db");
@@ -69,7 +112,7 @@ router.get("/home", function (req, res, next) {
         } else {
           res.render("home", {
             path: req.path,
-            inventory: result,
+            documents: result,
             success: "",
           });
           // res.json(result);
@@ -80,7 +123,7 @@ router.get("/home", function (req, res, next) {
 });
 
 // get a doc details
-router.get("/details", function (req, res, next) {
+router.get("/details", function (req, res) {
   const id = req.query._id;
 
   MongoClient.connect(db.url, (err, client) => {
@@ -95,7 +138,7 @@ router.get("/details", function (req, res, next) {
         if (err) throw err;
         res.render("details", {
           path: req.path,
-          inventory: result,
+          documents: result,
         });
         client.close;
       });
@@ -118,15 +161,15 @@ router.get("/edit", function (req, res) {
         if (err) throw err;
         res.render("edit", {
           path: req.path,
-          inventory: result,
+          documents: result,
         });
         client.close;
       });
   });
 });
 
-// TODO: edit and update data
-router.post("/update", function (req, res, next) {
+// edit and update data
+router.post("/update", function (req, res) {
   const id = req.query._id;
 
   MongoClient.connect(db.url, (err, client) => {
@@ -152,7 +195,7 @@ router.post("/update", function (req, res, next) {
 });
 
 // delete data
-router.get("/delete", function (req, res, next) {
+router.get("/delete", function (req, res) {
   const id = req.query._id;
 
   MongoClient.connect(db.url, (err, client) => {

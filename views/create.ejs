@@ -2,21 +2,20 @@
 <br />
 <div class="card">
   <div class="card-body">
-    <form action="/create" method="post" class="needs-validation">
+    <form
+      action="/create"
+      method="post"
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
       <div class="form-row">
         <div class="form-group col-md-8">
-          <label for="inv_name">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            name="inv_name"
-            id=""
-            required
-          />
+          <label for="item">Item Name</label>
+          <input type="text" class="form-control" name="item" id="" required />
         </div>
 
         <div class="form-group col-md-4">
-          <label for="inv_manager">Manager</label>
+          <label for="username">Manager</label>
           <label class="sr-only" for="inlineFormInputGroup">Username</label>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
@@ -25,7 +24,7 @@
             <input
               type="text"
               class="form-control"
-              name="inv_manager"
+              name="username"
               id=""
               placeholder="Username"
               required
@@ -35,51 +34,51 @@
       </div>
 
       <div class="form-group">
-        <label for="inv_type">Type</label>
-        <input type="text" class="form-control" name="inv_type" id="" />
+        <label for="type">Type</label>
+        <input type="text" class="form-control" name="type" id="" />
       </div>
 
       <div class="form-group">
-        <label for="inv_quantity">Quantity</label>
-        <input type="number" class="form-control" name="inv_quantity" id="" />
+        <label for="quantity">Quantity</label>
+        <input type="number" class="form-control" name="quantity" id="" />
       </div>
 
       <div class="form-group">
-        <label for="inv_street">Street</label>
-        <input type="text" class="form-control" name="inv_street" id="" />
+        <label for="street">Street</label>
+        <input type="text" class="form-control" name="street" id="" />
       </div>
 
       <div class="form-group">
-        <label for="inv_building">Building</label>
-        <input type="text" class="form-control" name="inv_building" id="" />
+        <label for="building">Building</label>
+        <input type="text" class="form-control" name="building" id="" />
       </div>
 
       <div class="form-group">
-        <label for="inv_countty">Country</label>
-        <input type="text" class="form-control" name="inv_country" id="" />
+        <label for="country">Country</label>
+        <input type="text" class="form-control" name="country" id="" />
       </div>
 
       <div class="form-group">
-        <label for="inv_code">Zip code</label>
-        <input type="number" class="form-control" name="inv_code" id="" />
+        <label for="postcode">Zip code</label>
+        <input type="number" class="form-control" name="postcode" id="" />
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="inv_lat">Lat</label>
-          <input type="text" class="form-control" name="inv_lat" id="" />
+          <label for="lat">Lat</label>
+          <input type="text" class="form-control" name="lat" id="" />
         </div>
 
         <div class="form-group col-md-6">
-          <label for="inv_lng">Lng</label>
-          <input type="text" class="form-control" name="inv_lng" id="" />
+          <label for="lng">Lng</label>
+          <input type="text" class="form-control" name="lng" id="" />
         </div>
       </div>
 
       <div class="form-group">
         <!-- <div class="mb-3"> -->
-        <label for="inv_photo">Photo</label>
-        <input class="form-control" type="file" id="formFile" />
+        <label for="image">Image</label>
+        <input class="form-control" type="file" name="image" id="" required />
         <!-- </div> -->
       </div>
 

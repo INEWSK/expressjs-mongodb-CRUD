@@ -34,25 +34,25 @@
     </tr>
   </thead>
   <tbody>
-    <% inventory.forEach((item, index)=> { %>
+    <% documents.forEach((doc, index)=> { %>
     <tr>
       <th><%- index + 1 %></th>
-      <td><%- item.inv_name %></td>
-      <td><%- item.inv_manager %></td>
-      <td><%- item.inv_quantity %></td>
+      <td><a href="/details?_id=<%- doc._id %>"><%- doc.item_name %></a></td>
+      <td><%- doc.manager %></td>
+      <td><%- doc.quantity %></td>
       <td>
         <div class="btn-group btn-group-sm" role="group" aria-label="">
           <button
             type="button"
             class="btn btn-primary"
-            onclick="location.href='/edit?_id=<%- item._id %>'"
+            onclick="location.href='/edit?_id=<%- doc._id %>'"
           >
             Edit
           </button>
           <button
             type="button"
             class="btn btn-danger"
-            onclick="location.href='/delete?_id=<%- item._id %>'"
+            onclick="location.href='/delete?_id=<%- doc._id %>'"
           >
             Delete
           </button>

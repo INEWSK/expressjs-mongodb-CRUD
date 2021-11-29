@@ -3,19 +3,19 @@
 <div class="card">
   <div class="card-header">Inventory details</div>
   <ul class="list-group list-group-flush">
-    <% if (inventory.length == 0) { %>
+    <% if (documents.length == 0) { %>
     <li class="list-group-item">No item found</li>
-    <% } else { %> <% inventory.forEach(item=> { %>
-    <li class="list-group-item">Item name: <%- item.inv_name %></li>
-    <li class="list-group-item">Manager: <%- item.inv_manager %></li>
-    <li class="list-group-item">Type: <%- item.inv_type %></li>
-    <li class="list-group-item">Quantity: <%- item.inv_quantity %></li>
-    <li class="list-group-item">Street: <%- item.inv_street %></li>
-    <li class="list-group-item">Building: <%- item.inv_building %></li>
-    <li class="list-group-item">Country: <%- item.inv_country %></li>
-    <li class="list-group-item">Zip code: <%- item.inv_code %></li>
-    <li class="list-group-item">Lat: <%- item.inv_lat %></li>
-    <li class="list-group-item">Lng: <%- item.inv_lng %></li>
+    <% } else { %> <% documents.forEach(doc=> { %>
+    <li class="list-group-item">Item name: <%- doc.item_name %></li>
+    <li class="list-group-item">Manager: <%- doc.manager %></li>
+    <li class="list-group-item">Type: <%- doc.type %></li>
+    <li class="list-group-item">Quantity: <%- doc.quantity %></li>
+    <li class="list-group-item">Street: <%- doc.address.street %></li>
+    <li class="list-group-item">Building: <%- doc.address.building %></li>
+    <li class="list-group-item">Country: <%- doc.address.country %></li>
+    <li class="list-group-item">Zip code: <%- doc.address.postcode %></li>
+    <li class="list-group-item">Lat: <%- doc.address.coordinate[0] %></li>
+    <li class="list-group-item">Lng: <%- doc.address.coordinate[1] %></li>
     <% }) %> <% } %>
   </ul>
 </div>
