@@ -9,17 +9,17 @@ const fs = require("fs");
 var multer = require("multer");
 
 var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, "./uploads/img");
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
 var upload = multer({ storage: storage });
 
-router.get("/", function (req, res) {
+router.get("/", (req, res) => {
   res.render("index", {
     title: "Express",
     description: "Welcome to EJS",
@@ -27,13 +27,13 @@ router.get("/", function (req, res) {
 });
 
 // user auth
-router.get("/signup", function (req, res) {
+router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
 router.post("/signup");
 
-router.get("/signin", function (req, res) {
+router.get("/signin", (req, res) => {
   res.render("signin");
 });
 
@@ -41,11 +41,11 @@ router.post("/signin");
 
 // mongodb CRUD
 // insert data
-router.get("/create", function (req, res) {
+router.get("/create", (req, res) => {
   res.render("create");
 });
 
-router.post("/create", upload.single("image"), function (req, res, next) {
+router.post("/create", upload.single("image"), (req, res, next) => {
   const file = req.file;
 
   if (!file) {
@@ -60,22 +60,22 @@ router.post("/create", upload.single("image"), function (req, res, next) {
   var imgObj = {
     contentType: req.file.mimetype,
     path: req.file.path,
-    image: new Buffer(encode_image, "base64"),
+    img64: new Buffer(encode_image, "base64"),
   };
 
   const obj = {
-    item_name: req.body.item,
-    manager: req.body.username,
+    item_name: req.body.item_name,
+    manager: req.body.manager,
     type: req.body.type,
     quantity: req.body.quantity,
     address: {
       street: req.body.street,
       building: req.body.building,
       country: req.body.country,
-      postcode: req.body.postcode,
-      coordinate: [req.body.lat, req.body.lng],
+      zipcode: req.body.zipcode,
+      coordinates: [req.body.lat, req.body.lng],
     },
-    img: imgObj,
+    image: imgObj,
   };
 
   MongoClient.connect(db.url, (err, client) => {
@@ -90,6 +90,11 @@ router.post("/create", upload.single("image"), function (req, res, next) {
       function (err, result) {
         if (err) throw err;
         client.close;
+        req.session.message = {
+          type: "success",
+          title: "Successful",
+          message: "Inventory item create successfully!",
+        };
         res.redirect("/home");
       }
     );
@@ -97,7 +102,7 @@ router.post("/create", upload.single("image"), function (req, res, next) {
 });
 
 // get all
-router.get("/home", function (req, res) {
+router.get("/home", (req, res) => {
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
     const db = client.db("miniproject_db");
@@ -113,9 +118,8 @@ router.get("/home", function (req, res) {
           res.render("home", {
             path: req.path,
             documents: result,
-            success: "",
+            success: "", // for session message
           });
-          // res.json(result);
         }
         client.close;
       });
@@ -123,7 +127,7 @@ router.get("/home", function (req, res) {
 });
 
 // get a doc details
-router.get("/details", function (req, res) {
+router.get("/details", (req, res) => {
   const id = req.query._id;
 
   MongoClient.connect(db.url, (err, client) => {
@@ -146,7 +150,7 @@ router.get("/details", function (req, res) {
 });
 
 // show text field data
-router.get("/edit", function (req, res) {
+router.get("/edit", (req, res) => {
   const id = req.query._id;
 
   MongoClient.connect(db.url, (err, client) => {
@@ -169,25 +173,56 @@ router.get("/edit", function (req, res) {
 });
 
 // edit and update data
-router.post("/update", function (req, res) {
+router.post("/update", upload.single("image"), (req, res) => {
   const id = req.query._id;
+  const file = req.file;
+
+  var setData = {
+    item_name: req.body.item_name,
+    manager: req.body.manager,
+    type: req.body.type,
+    quantity: req.body.quantity,
+    address: {
+      street: req.body.street,
+      building: req.body.building,
+      country: req.body.country,
+      zipcode: req.body.zipcode,
+      coordinates: [req.body.lat, req.body.lng],
+    },
+  };
 
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
 
     const db = client.db("miniproject_db");
     const whereQuery = { _id: ObjectId(id) };
-    const setData = { $set: req.body };
 
-    console.log(whereQuery, setData);
+    if (file) {
+      var img = fs.readFileSync(req.file.path);
+      var encode_image = img.toString("base64");
+
+      var imgObj = {
+        contentType: req.file.mimetype,
+        path: req.file.path,
+        img64: new Buffer(encode_image, "base64"),
+      };
+      // insert the new object imgObj into the setData Object
+      setData["image"] = imgObj;
+
+      console.log(setData);
+    }
 
     db.collection("inventory").updateOne(
       whereQuery,
-      setData,
+      { $set: setData },
       function (err, result) {
         if (err) throw err;
         client.close;
-        console.log(result);
+        req.session.message = {
+          type: "info",
+          title: "Successful",
+          message: "Inventory item " + setData.item_name + " is updated!",
+        };
         res.redirect("/home");
       }
     );
@@ -195,7 +230,7 @@ router.post("/update", function (req, res) {
 });
 
 // delete data
-router.get("/delete", function (req, res) {
+router.get("/delete", (req, res) => {
   const id = req.query._id;
 
   MongoClient.connect(db.url, (err, client) => {

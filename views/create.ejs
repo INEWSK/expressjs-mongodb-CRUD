@@ -1,90 +1,60 @@
-<h1 class="display-4">Create inventory</h1>
-<br />
-<div class="card">
-  <div class="card-body">
+<div class="ui fluid card">
+  <div class="content">
+    <div class="header">Create Inventory</div>
+  </div>
+  <div class="content">
     <form
       action="/create"
       method="post"
-      class="needs-validation"
+      class="ui form"
       enctype="multipart/form-data"
     >
-      <div class="form-row">
-        <div class="form-group col-md-8">
-          <label for="item">Item Name</label>
-          <input type="text" class="form-control" name="item" id="" required />
-        </div>
-
-        <div class="form-group col-md-4">
-          <label for="username">Manager</label>
-          <label class="sr-only" for="inlineFormInputGroup">Username</label>
-          <div class="input-group mb-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">@</div>
-            </div>
-            <input
-              type="text"
-              class="form-control"
-              name="username"
-              id=""
-              placeholder="Username"
-              required
-            />
-          </div>
-        </div>
+      <div class="field">
+        <label>Item Name</label>
+        <input type="text" name="item_name" placeholder="Item Name" required />
       </div>
-
-      <div class="form-group">
-        <label for="type">Type</label>
-        <input type="text" class="form-control" name="type" id="" />
+      <div class="field">
+        <label>Manager</label>
+        <input type="text" name="manager" placeholder="Username" required />
       </div>
-
-      <div class="form-group">
-        <label for="quantity">Quantity</label>
-        <input type="number" class="form-control" name="quantity" id="" />
+      <div class="field">
+        <label>Type</label>
+        <input type="text" name="type" placeholder="Type of the Inventory" />
       </div>
-
-      <div class="form-group">
-        <label for="street">Street</label>
-        <input type="text" class="form-control" name="street" id="" />
+      <div class="field">
+        <label>Quantity</label>
+        <input type="number" name="quantity" placeholder="Number" />
       </div>
-
-      <div class="form-group">
-        <label for="building">Building</label>
-        <input type="text" class="form-control" name="building" id="" />
+      <div class="field">
+        <label>Street</label>
+        <input type="text" name="street" placeholder="Street" />
       </div>
-
-      <div class="form-group">
-        <label for="country">Country</label>
-        <input type="text" class="form-control" name="country" id="" />
+      <div class="field">
+        <label>Building</label>
+        <input type="text" name="building" placeholder="Building" />
       </div>
-
-      <div class="form-group">
-        <label for="postcode">Zip code</label>
-        <input type="number" class="form-control" name="postcode" id="" />
+      <div class="field">
+        <label>Country</label>
+        <input type="text" name="country" placeholder="Country" />
       </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="lat">Lat</label>
-          <input type="text" class="form-control" name="lat" id="" />
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="lng">Lng</label>
-          <input type="text" class="form-control" name="lng" id="" />
-        </div>
+      <div class="field">
+        <label>Zip code</label>
+        <input type="text" name="zipcode" placeholder="Zip Code" />
       </div>
-
-      <div class="form-group">
-        <!-- <div class="mb-3"> -->
-        <label for="image">Image</label>
-        <input class="form-control" type="file" name="image" id="" required />
-        <!-- </div> -->
+      <div class="field">
+        <label>GPS Lat</label>
+        <input type="text" name="lat" placeholder="Latitude" />
       </div>
-
-      <hr class="my-4" />
+      <div class="field">
+        <label>GPS Lnt</label>
+        <input type="text" name="lng" placeholder="Longitude" />
+      </div>
+      <div class="field">
+        <label>Photo</label>
+        <input type="file" name="image" />
+      </div>
       <div>
-        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <button type="submit" class="fluid ui button">Submit</button>
       </div>
     </form>
   </div>

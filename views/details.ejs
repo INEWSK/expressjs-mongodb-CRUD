@@ -1,21 +1,71 @@
-<h1 class="display-4">Details of inventory</h1>
-<br />
-<div class="card">
-  <div class="card-header">Inventory details</div>
-  <ul class="list-group list-group-flush">
-    <% if (documents.length == 0) { %>
-    <li class="list-group-item">No item found</li>
-    <% } else { %> <% documents.forEach(doc=> { %>
-    <li class="list-group-item">Item name: <%- doc.item_name %></li>
-    <li class="list-group-item">Manager: <%- doc.manager %></li>
-    <li class="list-group-item">Type: <%- doc.type %></li>
-    <li class="list-group-item">Quantity: <%- doc.quantity %></li>
-    <li class="list-group-item">Street: <%- doc.address.street %></li>
-    <li class="list-group-item">Building: <%- doc.address.building %></li>
-    <li class="list-group-item">Country: <%- doc.address.country %></li>
-    <li class="list-group-item">Zip code: <%- doc.address.postcode %></li>
-    <li class="list-group-item">Lat: <%- doc.address.coordinate[0] %></li>
-    <li class="list-group-item">Lng: <%- doc.address.coordinate[1] %></li>
-    <% }) %> <% } %>
-  </ul>
-</div>
+<h1 class="ui header">Inventory Details</h1>
+<% documents.forEach(doc=> { %>
+<table class="ui table">
+  <tbody>
+    <tr>
+      <th class="right aligned">Item Name</th>
+      <td><%- doc.item_name %></td>
+    </tr>
+    <tr>
+      <th class="right aligned">Manager</th>
+      <td><%- doc.manager %></td>
+    </tr>
+    <tr>
+      <th class="right aligned">Type</th>
+      <td><%- doc.type %></td>
+    </tr>
+    <tr>
+      <th class="right aligned">Quantity</th>
+      <td><%- doc.quantity %></td>
+    </tr>
+    <tr>
+      <th class="right aligned">Street</th>
+      <td><%- doc.address.street %></td>
+    </tr>
+    <tr>
+      <th class="right aligned">Building</th>
+      <td><%- doc.address.building %></td>
+    </tr>
+    <tr>
+      <th class="right aligned">Country</th>
+      <td><%- doc.address.country %></td>
+    </tr>
+    <tr>
+      <th class="right aligned">Zip Code</th>
+      <td><%- doc.address.zipcode %></td>
+    </tr>
+    <tr>
+      <th class="right aligned">Coordinates</th>
+      <td>
+        <%- doc.address.coordinates[0] + " " + doc.address.coordinates[1] %>
+      </td>
+    </tr>
+    <% if (doc.image) { %>
+    <tr>
+      <th class="right aligned">Image</th>
+      <td>
+        <img
+          src="/<%- doc.image.path %>"
+          alt=""
+          class="ui large rounded image"
+        />
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+<button
+  type="button"
+  class="positive ui left floated button"
+  onclick="location.href='/edit?_id=<%- doc._id %>'"
+>
+  Edit
+</button>
+<button
+  type="button"
+  class="negative ui right floated button"
+  onclick="location.href='/delete?_id=<%- doc._id %>'"
+>
+  Delete
+</button>
+<% }) %>

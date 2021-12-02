@@ -1,59 +1,75 @@
-<h1 class="display-4">Inventory</h1>
-<p class="lead">
+<h1 class="ui header">Inventory</h1>
+<p>
   An express server that provides basic CRUD services for the inventory
   collection
 </p>
 
-<hr class="my-4" />
-
-<div>
-  <button
-    class="btn btn-primary"
-    onclick="location.href='/create'"
-    type="button"
-  >
-    Create new inventory
-  </button>
+<div class="ui stackable two column grid">
+  <div class="column">
+    <button
+      class="ui primary button"
+      onclick="location.href='/create'"
+      type="button"
+    >
+      Create new inventory
+    </button>
+  </div>
+  <div class="column right aligned">
+    <div class="ui category search">
+      <div class="ui icon input">
+        <input
+          class="prompt"
+          type="text"
+          placeholder="Searching..."
+          id="search-input"
+        />
+        <i class="search icon"></i>
+      </div>
+      <div class="results"></div>
+    </div>
+  </div>
 </div>
 
-<br />
-
 <!-- success create item alert message  -->
-<% if (success !='' ) { %>
-<div class="alert alert-success" role="alert"><%- success %></div>
+<% if (message) { %>
+<div class="ui <%- message.type %> message" role="alert">
+  <i class="close icon"></i>
+  <div class="header"><%- message.title %></div>
+  <p><%- message.message %></p>
+</div>
 <% } %>
 
-<table class="table table-striped table-hover">
+<!-- table from -->
+<table class="ui celled padding striped selectable table">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Manager</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Action</th>
+      <th class="center aligned">#</th>
+      <th>Name</th>
+      <th>Manager</th>
+      <th>Quantity</th>
+      <th class="center aligned">Action</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="inventory-table">
     <% documents.forEach((doc, index)=> { %>
     <tr>
-      <th><%- index + 1 %></th>
+      <th class="center aligned"><%- index + 1 %></th>
       <td><a href="/details?_id=<%- doc._id %>"><%- doc.item_name %></a></td>
       <td><%- doc.manager %></td>
       <td><%- doc.quantity %></td>
-      <td>
-        <div class="btn-group btn-group-sm" role="group" aria-label="">
+      <td class="center aligned">
+        <div class="ui small basic buttons">
           <button
-            type="button"
-            class="btn btn-primary"
+            class="ui left attached button"
             onclick="location.href='/edit?_id=<%- doc._id %>'"
           >
-            Edit
+            <i class="blue edit icon"></i>Edit
           </button>
           <button
-            type="button"
-            class="btn btn-danger"
+            class="ui right attached button"
             onclick="location.href='/delete?_id=<%- doc._id %>'"
           >
+            <i class="red trash icon"></i>
             Delete
           </button>
         </div>

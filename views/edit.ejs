@@ -1,150 +1,127 @@
-<h1 class="display-4">Edit inventory</h1>
-<br />
-<div class="card">
-  <div class="card-body">
+<div class="ui fluid card">
+  <div class="content">
+    <div class="header">Edit Inventory</div>
+  </div>
+  <div class="content">
     <% documents.forEach(doc=>{%>
-    <form action="/update?_id=<%- doc._id %>" method="post">
-      <div class="form-group row">
-        <label for="inv_name" class="col-sm-2 col-form-label"
-          >Inventory Name(*):</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_name"
-            placeholder="doc name"
-            value="<%- doc.item_name %>"
-          />
-        </div>
+    <form
+      action="/update?_id=<%- doc._id %>"
+      method="post"
+      class="ui form"
+      enctype="multipart/form-data"
+    >
+      <div class="field">
+        <label>Item Name</label>
+        <input
+          type="text"
+          name="item_name"
+          placeholder="Item Name"
+          value="<%- doc.item_name %>"
+          required
+        />
       </div>
-      <div class="form-group row">
-        <label for="inv_manager" class="col-sm-2 col-form-label"
-          >Manager:</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_manager"
-            placeholder="Username"
-            value="<%- doc.manager %>"
-            disabled
-            readonly
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inv_type" class="col-sm-2 col-form-label">Type:</label>
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_type"
-            placeholder="Type"
-            value="<%- doc.type %>"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inv_quantity" class="col-sm-2 col-form-label"
-          >Quantity:</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_quantity"
-            placeholder="Quantity"
-            value="<%- doc.quantity %>"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inv_street" class="col-sm-2 col-form-label">Street:</label>
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_street"
-            placeholder="Street"
-            value="<%- doc.address.street %>"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inv_building" class="col-sm-2 col-form-label"
-          >Building:</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_building"
-            placeholder="Building"
-            value="<%- doc.address.building %>"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inv_country" class="col-sm-2 col-form-label"
-          >Country:</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_country"
-            placeholder="Country"
-            value="<%- doc.address.country %>"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inv_code" class="col-sm-2 col-form-label">Zip code:</label>
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_code"
-            placeholder="Zip code"
-            value="<%- doc.address.postcode %>"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inv_lat" class="col-sm-2 col-form-label"
-          >GPS Latitude:</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_lat"
-            placeholder="Latitude"
-            value="<%- doc.address.coordinate[0] %>"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inv_lng" class="col-sm-2 col-form-label"
-          >GPS Longitude:</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            name="inv_lng"
-            placeholder="Longitude"
-            value="<%- doc.address.coordinate[1] %>"
-          />
-        </div>
+      <div class="field">
+        <label>Manager</label>
+        <input
+          type="text"
+          name="manager"
+          placeholder="Username"
+          value="<%- doc.manager %>"
+          readonly
+        />
       </div>
 
-      <hr class="my-4" />
+      <div class="field">
+        <label>Type</label>
+        <input
+          type="text"
+          name="type"
+          placeholder="Type"
+          value="<%- doc.type %>"
+        />
+      </div>
 
-      <div>
-        <button type="submit" class="btn btn-primary">Update</button>
+      <div class="field">
+        <label>Quantity</label>
+        <input
+          type="number"
+          name="quantity"
+          placeholder="Quantity"
+          value="<%- doc.quantity %>"
+        />
+      </div>
+
+      <div class="field">
+        <label>Street</label>
+        <input
+          type="text"
+          name="street"
+          placeholder="Street"
+          value="<%- doc.address.street %>"
+        />
+      </div>
+
+      <div class="field">
+        <label>Building</label>
+        <input
+          type="text"
+          name="building"
+          placeholder="Building"
+          value="<%- doc.address.building %>"
+        />
+      </div>
+
+      <div class="field">
+        <label>Country</label>
+        <input
+          type="text"
+          name="country"
+          placeholder="Country"
+          value="<%- doc.address.country %>"
+        />
+      </div>
+
+      <div class="field">
+        <label>Zip Code</label>
+        <input
+          type="text"
+          name="zipcode"
+          placeholder="Zip Code"
+          value="<%- doc.address.zipcode %>"
+        />
+      </div>
+
+      <div class="field">
+        <label>GPS Latitude</label>
+        <input
+          type="number"
+          name="lat"
+          placeholder="Latitude"
+          value="<%- doc.address.coordinates[0] %>"
+        />
+      </div>
+
+      <div class="field">
+        <label>GPS Longitude</label>
+        <input
+          type="number"
+          name="lng"
+          placeholder="Longitude"
+          value="<%- doc.address.coordinates[1] %>"
+        />
+      </div>
+
+      <div class="field">
+        <label>Photo</label>
+        <input type="file" name="image" />
+      </div>
+
+      <div class="ui fluid buttons">
+        <button type="button" class="ui button" onclick="history.back()">
+          Cancel
+        </button>
+        <div class="or"></div>
+        <button type="submit" class="ui positive button">Update</button>
       </div>
     </form>
     <%}) %>
