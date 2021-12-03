@@ -22,16 +22,33 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("cookie cat"));
+// session settings
 app.use(
   session({
     secret: "secret key here",
     saveUninitialized: true,
+    name: "token",
     resave: false,
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // one day
+    rolling: true,
   })
 );
 
-//session flash message
+// session check
+app.use((req, res, next) => {
+  const { authenticated } = req.session;
+  if (req.url !== "/signin" && req.url !== "/signup") {
+    if (!authenticated) {
+      res.redirect("/signin");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+// session flash message
 app.use((req, res, next) => {
   res.locals.message = req.session.message;
   delete req.session.message;
@@ -46,10 +63,14 @@ app.use("/uploads/img", express.static(path.join(__dirname, "uploads/img")));
 
 // import routes
 var index = require("./routes/index");
+var auth = require("./routes/auth");
+var inventory = require("./routes/inventory");
 
 // load routes
+// 根據 app.use 順序優先加載, 如 index.js 沒有對應 URL 再往下尋找
 app.use("/", index);
-// app.use("/signin", auth);
+app.use("/", auth);
+app.use("/", inventory);
 
 // connect mongodb
 mongodb.connect();

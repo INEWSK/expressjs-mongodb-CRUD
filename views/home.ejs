@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<!-- success create item alert message  -->
+<!-- item alert message  -->
 <% if (message) { %>
 <div class="ui <%- message.type %> message" role="alert">
   <i class="close icon"></i>
@@ -50,28 +50,48 @@
       <th class="center aligned">Action</th>
     </tr>
   </thead>
-  <tbody id="inventory-table">
+  <tbody>
     <% documents.forEach((doc, index)=> { %>
     <tr>
       <th class="center aligned"><%- index + 1 %></th>
-      <td><a href="/details?_id=<%- doc._id %>"><%- doc.item_name %></a></td>
+      <td>
+        <a href="./details/<%- doc._id %>"><%- doc.item_name %></a>
+      </td>
       <td><%- doc.manager %></td>
       <td><%- doc.quantity %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
+          <% if (doc.manager == currentUser) { %>
           <button
             class="ui left attached button"
-            onclick="location.href='/edit?_id=<%- doc._id %>'"
+            onclick="location.href='/edit/<%- doc._id %>'"
           >
             <i class="blue edit icon"></i>Edit
           </button>
           <button
             class="ui right attached button"
-            onclick="location.href='/delete?_id=<%- doc._id %>'"
+            onclick="location.href='/delete/<%- doc._id %>'"
           >
             <i class="red trash icon"></i>
             Delete
           </button>
+          <% } else { %>
+          <button
+            class="ui left attached button"
+            onclick="location.href='/edit/<%- doc._id %>'"
+            disabled
+          >
+            <i class="blue edit icon"></i>Edit
+          </button>
+          <button
+            class="ui right attached button"
+            onclick="location.href='/delete/<%- doc._id %>'"
+            disabled
+          >
+            <i class="red trash icon"></i>
+            Delete
+          </button>
+          <% } %>
         </div>
       </td>
     </tr>

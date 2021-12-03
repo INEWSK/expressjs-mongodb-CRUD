@@ -37,7 +37,13 @@
     <tr>
       <th class="right aligned">Coordinates</th>
       <td>
-        <%- doc.address.coordinates[0] + " " + doc.address.coordinates[1] %>
+        <%- doc.address.coordinates[0] + " " + doc.address.coordinates[1] %> <%
+        if (doc.address.coordinates[0] && doc.address.coordinates[1] != '') { %>
+        <button class="ui basic button ml-2" type="button" onclick="">
+          <i class="map outline icon"></i>
+          Show on map
+        </button>
+        <% } %>
       </td>
     </tr>
     <% if (doc.image) { %>
@@ -54,18 +60,19 @@
     <% } %>
   </tbody>
 </table>
+<% if (doc.manager == currentUser) { %>
 <button
   type="button"
   class="positive ui left floated button"
-  onclick="location.href='/edit?_id=<%- doc._id %>'"
+  onclick="location.href='/edit/<%- doc._id %>'"
 >
   Edit
 </button>
 <button
   type="button"
   class="negative ui right floated button"
-  onclick="location.href='/delete?_id=<%- doc._id %>'"
+  onclick="location.href='/delete/<%- doc._id %>'"
 >
   Delete
 </button>
-<% }) %>
+<% } %> <% }) %>

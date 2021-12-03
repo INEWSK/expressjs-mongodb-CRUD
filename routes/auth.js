@@ -1,45 +1,22 @@
 var express = require("express");
-var bcrypt = require("bcrypt");
 var router = express.Router();
-var MongoClient = require("mongodb").MongoClient;
-
-const users = [];
+var userController = require("../controllers/users");
 
 router.get("/signup", function (req, res, next) {
   res.render("signup");
 });
 
-router.post("/signup");
+router.post("/signup", userController.create);
 
-router.get("/signin", function (req, res, next) {
-  res.render("signin");
+router.get("/signin", (req, res, next) => {
+  res.render("signin", {
+    path: req.path,
+    success: "",
+  });
 });
 
-// router.post("/", async function (req, res) {
-//   console.log(req.body.username);
-//   // process username and password
-//   try {
-//     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-//     users.push({
-//       id: Date.now().toString(),
-//       username: req.body.username,
-//       password: hashedPassword,
-//     });
+router.post("/signin", userController.signin);
 
-//     var db = req.db;
-//     var collection = db.collection("auth");
-
-//     collection.insertOne(users, function (err, res) {
-//       if (err) {
-//         console.log(err);
-//       }
-//       res.redirect("/signin");
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.redirect("/");
-//   }
-//   console.log(users);
-// });
+router.get("/signout", userController.signout);
 
 module.exports = router;

@@ -5,7 +5,7 @@
   <div class="content">
     <% documents.forEach(doc=>{%>
     <form
-      action="/update?_id=<%- doc._id %>"
+      action="/update/<%- doc._id %>"
       method="post"
       class="ui form"
       enctype="multipart/form-data"

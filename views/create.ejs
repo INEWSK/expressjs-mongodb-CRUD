@@ -15,7 +15,13 @@
       </div>
       <div class="field">
         <label>Manager</label>
-        <input type="text" name="manager" placeholder="Username" required />
+        <input
+          type="text"
+          name="manager"
+          placeholder="Username"
+          value="<%- currentUser %> "
+          readonly
+        />
       </div>
       <div class="field">
         <label>Type</label>
