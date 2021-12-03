@@ -2,7 +2,6 @@ const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 
 const url = "";
-
 const connect = async function () {
   try {
     MongoClient.connect(url, function (error, client) {

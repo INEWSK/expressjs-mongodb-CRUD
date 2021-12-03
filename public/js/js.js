@@ -1,12 +1,16 @@
 // filter table
 $("#search-input").on("keyup", function () {
   var value = $(this).val().toLowerCase();
-
   $("table tbody tr").each(function () {
     $(this).toggle(
       $(this).children("#item-name").html().toLowerCase().indexOf(value) > -1
     );
   });
+});
+
+$(".close.icon").on("click", function () {
+  console.log("close icon was clicked");
+  $(this).parent().transition("fade");
 });
 
 // get url query

@@ -26,6 +26,13 @@ router.post("/update/:id", upload.single("image"), itemController.update);
 // delete data
 router.get("/delete/:id", itemController.delete);
 
-router.get("/map/", itemController.map)
+// show coords marker on map
+router.get("/map/", itemController.map);
+
+// TODO: filter item with the item name and show in JSON format
+router.get("/api/inventory/name/:name");
+
+// TODO: filter item with item type
+router.get("/api/inventory/type/:type");
 
 module.exports = router;

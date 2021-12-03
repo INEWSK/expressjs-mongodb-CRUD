@@ -2,13 +2,13 @@ var express = require("express");
 var router = express.Router();
 var userController = require("../controllers/users");
 
-router.get("/signup", function (req, res, next) {
+router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
 router.post("/signup", userController.create);
 
-router.get("/signin", (req, res, next) => {
+router.get("/signin", (req, res) => {
   res.render("signin", {
     path: req.path,
     success: "",
