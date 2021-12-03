@@ -6,7 +6,7 @@ const imgService = require("../config/multer");
 const upload = imgService.upload;
 
 // list all inventory
-router.get("/home", itemController.list);
+router.get("/index", itemController.list);
 
 router.get("/details/:id", itemController.details);
 

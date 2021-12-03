@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
     // user not logged in!
     res.redirect("/signin");
   } else {
-    res.redirect("/home");
+    res.redirect("/index");
   }
 });
 

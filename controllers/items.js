@@ -19,7 +19,7 @@ items.list = (req, res) => {
         if (err) throw err;
         console.dir("current session user: " + req.session.user);
         client.close;
-        res.render("home", {
+        res.render("index", {
           path: req.path,
           documents: result,
           currentUser: req.session.user,
@@ -102,7 +102,7 @@ items.insert = (req, res, next) => {
           title: "Successfully",
           message: "Item create successfully!",
         };
-        res.redirect("/home");
+        res.redirect("/index");
       }
     );
   });
@@ -178,7 +178,7 @@ items.update = (req, res, next) => {
           title: "Successful",
           message: "Item " + setData.item_name + " is updated!",
         };
-        res.redirect("/home");
+        res.redirect("/index");
       }
     );
   });
@@ -201,7 +201,7 @@ items.delete = (req, res) => {
           title: "Successfully",
           message: "Item has been removed from list!",
         };
-        res.redirect("/home");
+        res.redirect("/index");
       }
     );
   });

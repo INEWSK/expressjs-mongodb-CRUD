@@ -33,7 +33,7 @@ users.signin = async (req, res) => {
     };
     req.session.authenticated = true;
     req.session.user = user.username;
-    res.redirect("/home");
+    res.redirect("/index");
   } else {
     req.session.message = {
       type: "negative",
