@@ -45,12 +45,12 @@ users.signin = async (req, res) => {
 };
 
 users.signout = (req, res) => {
+  // req.session.message = {
+  //   type: "success",
+  //   title: "Logout successful",
+  //   message: "You've been logged out. Please sign-in again.",
+  // };
   req.session.destroy();
-  req.session.message = {
-    type: "success",
-    title: "Logout successful",
-    message: "You've been logged out. Please sign-in again.",
-  };
   res.redirect("/signin");
 };
 

@@ -26,4 +26,6 @@ router.post("/update/:id", upload.single("image"), itemController.update);
 // delete data
 router.get("/delete/:id", itemController.delete);
 
+router.get("/map/", itemController.map)
+
 module.exports = router;

@@ -207,4 +207,10 @@ items.delete = (req, res) => {
   });
 };
 
+items.map = (req, res) => {
+  const coords = [req.query.lat, req.query.lng];
+
+  res.render("map");
+};
+
 module.exports = items;

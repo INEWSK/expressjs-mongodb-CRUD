@@ -37,12 +37,24 @@
     <tr>
       <th class="right aligned">Coordinates</th>
       <td>
-        <%- doc.address.coordinates[0] + " " + doc.address.coordinates[1] %> <%
-        if (doc.address.coordinates[0] && doc.address.coordinates[1] != '') { %>
-        <button class="ui basic button ml-2" type="button" onclick="">
-          <i class="map outline icon"></i>
-          Show on map
-        </button>
+        <% if (doc.address.coordinates[0] && doc.address.coordinates[1] != '') {
+        %> <%- doc.address.coordinates[0] + ", " + doc.address.coordinates[1] %>
+        <form action="/map" method="" style="display: inline">
+          <input
+            type="hidden"
+            value="<%- doc.address.coordinates[0] %>"
+            name="lat"
+          />
+          <input
+            type="hidden"
+            value="<%- doc.address.coordinates[1] %>"
+            name="lng"
+          />
+          <button class="ui basic button ml-2" type="submit">
+            <i class="map outline icon"></i>
+            Show on map
+          </button>
+        </form>
         <% } %>
       </td>
     </tr>

@@ -1,11 +1,24 @@
 <%- include ('layout/header') %>
-<h1 class="ui header">Inventory</h1>
-<p>
-  An express server that provides basic CRUD services for the inventory
-  collection
-</p>
 
-<div class="ui stackable two column grid">
+<div class="ui two column grid">
+  <div class="column">
+    <h1 class="ui header">Inventory</h1>
+    <p>
+      An express server that provides basic CRUD services for the inventory
+      collection
+    </p>
+  </div>
+  <div class="column right aligned">
+    <button
+      class="ui basic right labeled icon button"
+      onclick="location.href='/signout'"
+    >
+      <i class="sign-out icon"></i>Logout
+    </button>
+  </div>
+</div>
+
+<div class="ui two column grid">
   <div class="column">
     <button
       class="ui primary button"
@@ -55,7 +68,7 @@
     <% documents.forEach((doc, index)=> { %>
     <tr>
       <th class="center aligned"><%- index + 1 %></th>
-      <td>
+      <td id="item-name">
         <a href="./details/<%- doc._id %>"><%- doc.item_name %></a>
       </td>
       <td><%- doc.manager %></td>
