@@ -1,5 +1,4 @@
 var express = require("express");
-var router = express.Router();
 
 const items = {};
 const db = require("../config/mongodb");
@@ -7,13 +6,16 @@ const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 const fs = require("fs");
 
+const dbName = "s381f_project";
+const collectionName = "inventory";
+
 // CRUD
 items.list = (req, res) => {
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
-    const db = client.db("miniproject_db");
+    const db = client.db(dbName);
 
-    db.collection("inventory")
+    db.collection(collectionName)
       .find({})
       .toArray(function (err, result) {
         if (err) throw err;
@@ -34,9 +36,9 @@ items.details = (req, res) => {
 
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
-    const db = client.db("miniproject_db");
+    const db = client.db(dbName);
 
-    db.collection("inventory")
+    db.collection(collectionName)
       .find({
         _id: ObjectId(id),
       })
@@ -55,24 +57,9 @@ items.details = (req, res) => {
 items.insert = (req, res, next) => {
   const file = req.file;
 
-  if (!file) {
-    const error = new Error("Please upload image file.");
-    error.httpStatusCode = 400;
-    return next(error);
-  }
-
-  var img = fs.readFileSync(req.file.path);
-  var encode_image = img.toString("base64");
-
-  var imgObj = {
-    contentType: req.file.mimetype,
-    path: req.file.path,
-    img64: new Buffer(encode_image, "base64"),
-  };
-
-  const obj = {
+  var newObj = {
     item_name: req.body.item_name,
-    manager: req.body.manager.trim(),
+    manager: req.body.manager.trim(), // no idea
     type: req.body.type,
     quantity: req.body.quantity,
     address: {
@@ -82,15 +69,27 @@ items.insert = (req, res, next) => {
       zipcode: req.body.zipcode,
       coordinates: [req.body.lat, req.body.lng],
     },
-    image: imgObj,
   };
 
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
-    const db = client.db("miniproject_db");
+    const db = client.db(dbName);
 
-    db.collection("inventory").insertOne(
-      obj,
+    if (file) {
+      var img = fs.readFileSync(req.file.path);
+      var encode_image = img.toString("base64");
+
+      var imgObj = {
+        contentType: req.file.mimetype,
+        path: req.file.path,
+        img64: new Buffer(encode_image, "base64"),
+      };
+
+      newObj["image"] = imgObj;
+    }
+
+    db.collection(collectionName).insertOne(
+      newObj,
       {
         safe: true,
       },
@@ -113,9 +112,9 @@ items.edit = (req, res) => {
 
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
-    const db = client.db("miniproject_db");
+    const db = client.db(dbName);
 
-    db.collection("inventory")
+    db.collection(collectionName)
       .find({
         _id: ObjectId(id),
       })
@@ -130,7 +129,7 @@ items.edit = (req, res) => {
   });
 };
 
-items.update = (req, res, next) => {
+items.update = (req, res) => {
   const id = req.params.id;
   const file = req.file;
 
@@ -150,8 +149,7 @@ items.update = (req, res, next) => {
 
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
-
-    const db = client.db("miniproject_db");
+    const db = client.db(dbName);
     const whereQuery = { _id: ObjectId(id) };
 
     if (file) {
@@ -167,7 +165,7 @@ items.update = (req, res, next) => {
       setData["image"] = imgObj;
     }
 
-    db.collection("inventory").updateOne(
+    db.collection(collectionName).updateOne(
       whereQuery,
       { $set: setData },
       function (err, result) {
@@ -189,9 +187,9 @@ items.delete = (req, res) => {
 
   MongoClient.connect(db.url, (err, client) => {
     if (err) throw err;
-    const db = client.db("miniproject_db");
+    const db = client.db(dbName);
 
-    db.collection("inventory").deleteOne(
+    db.collection(collectionName).deleteOne(
       { _id: ObjectId(id) },
       function (err, result) {
         if (err) throw err;
@@ -204,6 +202,40 @@ items.delete = (req, res) => {
         res.redirect("/index");
       }
     );
+  });
+};
+
+items.search = (req, res) => {
+  var whereQuery;
+
+  MongoClient.connect(db.url, (err, client) => {
+    if (err) throw err;
+    const db = client.db(dbName);
+
+    if (req.params.name) {
+      whereQuery = req.params.name.replace(/_/g, " ");
+      console.log("where string is: " + whereQuery);
+      db.collection(collectionName)
+        .find({
+          item_name: whereQuery,
+        })
+        .toArray((err, result) => {
+          if (err) throw err;
+          client.close;
+          res.json(result);
+        });
+    } else {
+      whereQuery = req.params.type.replace(/_/g, " ");
+      db.collection(collectionName)
+        .find({
+          type: whereQuery,
+        })
+        .toArray((err, result) => {
+          if (err) throw err;
+          client.close;
+          res.json(result);
+        });
+    }
   });
 };
 

@@ -30,9 +30,9 @@ router.get("/delete/:id", itemController.delete);
 router.get("/map/", itemController.map);
 
 // TODO: filter item with the item name and show in JSON format
-router.get("/api/inventory/name/:name");
+router.get("/api/inventory/name/:name", itemController.search);
 
 // TODO: filter item with item type
-router.get("/api/inventory/type/:type");
+router.get("/api/inventory/type/:type", itemController.search);
 
 module.exports = router;

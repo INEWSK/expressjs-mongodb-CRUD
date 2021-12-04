@@ -1,22 +1,10 @@
 <%- include ('layout/header') %>
 
-<div class="ui two column grid">
-  <div class="column">
-    <h1 class="ui header">Inventory</h1>
-    <p>
-      An express server that provides basic CRUD services for the inventory
-      collection
-    </p>
-  </div>
-  <div class="column right aligned">
-    <button
-      class="ui basic right labeled icon button"
-      onclick="location.href='/signout'"
-    >
-      <i class="sign-out icon"></i>Logout
-    </button>
-  </div>
-</div>
+<h1 class="ui header">Inventory</h1>
+<p>
+  An express server that provides basic CRUD services for the inventory
+  collection
+</p>
 
 <div class="ui two column grid">
   <div class="column">
@@ -57,11 +45,11 @@
 <table class="ui celled padding striped selectable table">
   <thead>
     <tr>
-      <th class="center aligned">#</th>
-      <th>Name</th>
-      <th>Manager</th>
-      <th>Quantity</th>
-      <th class="center aligned">Action</th>
+      <th class="one wide center aligned">#</th>
+      <th class="five wide">Name</th>
+      <th class="four wide">Manager</th>
+      <th class="three wide">Quantity</th>
+      <th class="three wide center aligned">Action</th>
     </tr>
   </thead>
   <tbody>

@@ -1,9 +1,17 @@
-<h1 class="ui header">Inventory Details</h1>
+<button
+  class="ui right floated right labeled basic icon button"
+  onclick="history.back()"
+>
+  <i class="times icon"></i> Back
+</button>
+
+<h1 class="ui left floated header">Inventory Details</h1>
+
 <% documents.forEach(doc=> { %>
-<table class="ui table">
+<table class="ui basic definition padded table">
   <tbody>
     <tr>
-      <th class="right aligned">Item Name</th>
+      <th class="collapsing right aligned two wide">Item Name</th>
       <td><%- doc.item_name %></td>
     </tr>
     <tr>
@@ -50,7 +58,7 @@
             value="<%- doc.address.coordinates[1] %>"
             name="lng"
           />
-          <button class="ui basic button ml-2" type="submit">
+          <button class="ui basic small button ml-2" type="submit">
             <i class="map outline icon"></i>
             Show on map
           </button>
@@ -71,20 +79,28 @@
     </tr>
     <% } %>
   </tbody>
+  <tfoot>
+    <tr>
+      <th></th>
+      <th colspan="2">
+        <button
+          type="button"
+          class="ui left floated small basic button"
+          onclick="location.href='/edit/<%- doc._id %>'"
+        >
+          <i class="edit icon"></i>
+          Edit
+        </button>
+        <button
+          type="button"
+          class="ui right floated small basic negative button"
+          onclick="location.href='/delete/<%- doc._id %>'"
+        >
+          <i class="trash icon"></i>
+          Delete
+        </button>
+      </th>
+    </tr>
+  </tfoot>
 </table>
-<% if (doc.manager == currentUser) { %>
-<button
-  type="button"
-  class="positive ui left floated button"
-  onclick="location.href='/edit/<%- doc._id %>'"
->
-  Edit
-</button>
-<button
-  type="button"
-  class="negative ui right floated button"
-  onclick="location.href='/delete/<%- doc._id %>'"
->
-  Delete
-</button>
-<% } %> <% }) %>
+<% if (doc.manager == currentUser) { %> <% } %> <% }) %>
