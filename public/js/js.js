@@ -8,10 +8,18 @@ $("#search-input").on("keyup", function () {
   });
 });
 
-$(".close.icon").on("click", function () {
-  console.log("close icon was clicked");
+// closed message display info
+$(".message .close").on("click", function () {
   $(this).parent().transition("fade");
 });
+
+// confirm message box for delete button
+$(".delete-item.button").on("click", function () {
+  if (confirm("Delete this item?"))
+    document.location = "/delete/" + $("#item-id").val();
+});
+
+//TODO: block another user edit different user edit data in client side
 
 // get url query
 function getQueryVariable(variable) {

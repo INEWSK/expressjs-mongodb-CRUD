@@ -54,6 +54,7 @@
   </thead>
   <tbody>
     <% documents.forEach((doc, index)=> { %>
+    <input id="item-id" type="hidden" value="<%- doc._id %>" />
     <tr>
       <th class="center aligned"><%- index + 1 %></th>
       <td id="item-name">
@@ -70,26 +71,15 @@
           >
             <i class="blue edit icon"></i>Edit
           </button>
-          <button
-            class="ui right attached button"
-            onclick="location.href='/delete/<%- doc._id %>'"
-          >
+          <button class="ui right attached delete-item button">
             <i class="red trash icon"></i>
             Delete
           </button>
           <% } else { %>
-          <button
-            class="ui left attached button"
-            onclick="location.href='/edit/<%- doc._id %>'"
-            disabled
-          >
+          <button class="ui left attached button" disabled>
             <i class="blue edit icon"></i>Edit
           </button>
-          <button
-            class="ui right attached button"
-            onclick="location.href='/delete/<%- doc._id %>'"
-            disabled
-          >
+          <button class="ui right attached delete button" disabled>
             <i class="red trash icon"></i>
             Delete
           </button>

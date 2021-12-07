@@ -21,6 +21,7 @@ items.list = (req, res) => {
         if (err) throw err;
         console.dir("current session user: " + req.session.user);
         client.close;
+        console.dir("is empty?: " + isEmptyObject(result));
         res.render("index", {
           path: req.path,
           documents: result,
@@ -214,7 +215,7 @@ items.search = (req, res) => {
 
     if (req.params.name) {
       whereQuery = req.params.name.replace(/_/g, " ");
-      console.log("where string is: " + whereQuery);
+      console.dir("where string is: " + whereQuery);
       db.collection(collectionName)
         .find({
           item_name: whereQuery,

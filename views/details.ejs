@@ -8,6 +8,7 @@
 <h1 class="ui left floated header">Inventory Details</h1>
 
 <% documents.forEach(doc=> { %>
+<input id="item-id" type="hidden" value="<%- doc._id %> " />
 <table class="ui basic definition padded table">
   <tbody>
     <tr>
@@ -93,8 +94,7 @@
         </button>
         <button
           type="button"
-          class="ui right floated small basic negative button"
-          onclick="location.href='/delete/<%- doc._id %>'"
+          class="ui right floated small basic negative delete-item button"
         >
           <i class="trash icon"></i>
           Delete
