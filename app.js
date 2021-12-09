@@ -10,7 +10,7 @@ var session = require("express-session");
 var mongodb = require("./config/mongodb");
 var app = express();
 
-const PORT = process.env.PORT || 3030;
+// const PORT = process.env.PORT || 3000;
 
 // view engine
 app.set("views", path.join(__dirname, "views"));
@@ -92,8 +92,8 @@ app.use(function (err, req, res, next) {
 });
 
 // create server
-app.listen(PORT, () => {
-  console.log(`app listening at: http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`app listening at: http://localhost:${PORT}`);
+// });
 
 module.exports = app;
