@@ -72,7 +72,7 @@
       <th class="right aligned">Image</th>
       <td>
         <img
-          src="/<%- doc.image.path %>"
+          src="data:<%- doc.image.contentType %>;base64, <%- doc.image.img64 %>"
           alt=""
           class="ui large rounded image"
         />

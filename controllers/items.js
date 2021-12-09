@@ -21,7 +21,7 @@ items.list = (req, res) => {
         if (err) throw err;
         console.dir("current session user: " + req.session.user);
         client.close;
-        console.dir("is empty?: " + isEmptyObject(result));
+        // console.dir("is empty?: " + isEmptyObject(result));
         res.render("index", {
           path: req.path,
           documents: result,
@@ -78,12 +78,12 @@ items.insert = (req, res, next) => {
 
     if (file) {
       var img = fs.readFileSync(req.file.path);
-      var encode_image = img.toString("base64");
+      var encode_image = new Buffer.from(img).toString("base64");
 
       var imgObj = {
         contentType: req.file.mimetype,
         path: req.file.path,
-        img64: new Buffer(encode_image, "base64"),
+        img64: encode_image,
       };
 
       newObj["image"] = imgObj;
