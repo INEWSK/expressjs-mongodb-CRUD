@@ -56,7 +56,7 @@ items.details = (req, res) => {
 };
 
 items.insert = (req, res, next) => {
-  const imgFile = req.file;
+  const file = req.file;
 
   var insertObj = {
     item_name: req.body.item_name,
@@ -76,10 +76,10 @@ items.insert = (req, res, next) => {
     if (err) throw err;
     const db = client.db(dbName);
 
-    if (imgFile) {
+    if (file) {
       var image = {};
-      image["data"] = imgFile.buffer.toString("base64");
-      image["contentType"] = imgFile.mimetype;
+      image["data"] = file.buffer.toString("base64");
+      image["contentType"] = file.mimetype;
       // add the new object image into insert obj
       insertObj["image"] = image;
     }
@@ -127,7 +127,7 @@ items.edit = (req, res) => {
 
 items.update = (req, res) => {
   const id = req.params.id;
-  const imgFile = req.file;
+  const file = req.file;
 
   var setData = {
     item_name: req.body.item_name,
@@ -148,10 +148,10 @@ items.update = (req, res) => {
     const db = client.db(dbName);
     const whereQuery = { _id: ObjectId(id) };
 
-    if (imgFile) {
+    if (file) {
       var image = {};
-      image["data"] = imgFile.buffer.toString("base64");
-      image["contentType"] = imgFile.mimetype;
+      image["data"] = file.buffer.toString("base64");
+      image["contentType"] = file.mimetype;
       // insert the new object imgObj into the setData Object
       setData["image"] = image;
     }
