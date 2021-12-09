@@ -56,9 +56,9 @@ items.details = (req, res) => {
 };
 
 items.insert = (req, res, next) => {
-  const file = req.file;
+  const imgFile = req.file;
 
-  var newObj = {
+  var insertObj = {
     item_name: req.body.item_name,
     manager: req.body.manager.trim(), // no idea
     type: req.body.type,
@@ -76,21 +76,16 @@ items.insert = (req, res, next) => {
     if (err) throw err;
     const db = client.db(dbName);
 
-    if (file) {
-      var img = fs.readFileSync(req.file.path);
-      var encode_image = new Buffer.from(img).toString("base64");
-
-      var imgObj = {
-        contentType: req.file.mimetype,
-        path: req.file.path,
-        img64: encode_image,
-      };
-
-      newObj["image"] = imgObj;
+    if (imgFile) {
+      var image = {};
+      image["data"] = imgFile.buffer.toString("base64");
+      image["contentType"] = imgFile.mimetype;
+      // add the new object image into insert obj
+      insertObj["image"] = image;
     }
 
     db.collection(collectionName).insertOne(
-      newObj,
+      insertObj,
       {
         safe: true,
       },
@@ -132,7 +127,7 @@ items.edit = (req, res) => {
 
 items.update = (req, res) => {
   const id = req.params.id;
-  const file = req.file;
+  const imgFile = req.file;
 
   var setData = {
     item_name: req.body.item_name,
@@ -153,17 +148,12 @@ items.update = (req, res) => {
     const db = client.db(dbName);
     const whereQuery = { _id: ObjectId(id) };
 
-    if (file) {
-      var img = fs.readFileSync(req.file.path);
-      var encode_image = img.toString("base64");
-
-      var imgObj = {
-        contentType: req.file.mimetype,
-        path: req.file.path,
-        img64: new Buffer(encode_image, "base64"),
-      };
+    if (imgFile) {
+      var image = {};
+      image["data"] = imgFile.buffer.toString("base64");
+      image["contentType"] = imgFile.mimetype;
       // insert the new object imgObj into the setData Object
-      setData["image"] = imgObj;
+      setData["image"] = image;
     }
 
     db.collection(collectionName).updateOne(

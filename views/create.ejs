@@ -49,11 +49,21 @@
       </div>
       <div class="field">
         <label>GPS Lat</label>
-        <input type="text" name="lat" placeholder="Latitude" />
+        <input
+          type="text"
+          name="lat"
+          placeholder="Latitude"
+          onkeyup="value=value.replace(/[^0-9\.]/g,'')"
+        />
       </div>
       <div class="field">
         <label>GPS Lnt</label>
-        <input type="text" name="lng" placeholder="Longitude" />
+        <input
+          type="text"
+          name="lng"
+          placeholder="Longitude"
+          onkeyup="value=value.replace(/[^0-9\.]/g,'')"
+        />
       </div>
       <div class="field">
         <label>Photo</label>

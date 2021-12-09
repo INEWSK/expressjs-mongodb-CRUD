@@ -59,7 +59,6 @@ app.use((req, res, next) => {
 app.use("/css", express.static(path.join(__dirname, "public/css")));
 app.use("/js", express.static(path.join(__dirname, "public/js")));
 app.use("/img", express.static(path.join(__dirname, "public/img")));
-app.use("/uploads/img", express.static(path.join(__dirname, "uploads/img")));
 
 // import routes
 var index = require("./routes/index");

@@ -19,7 +19,13 @@ $(".delete-item.button").on("click", function () {
     document.location = "/delete/" + $("#item-id").val();
 });
 
+// confirm message box for signout button
+$(".sign-out.label").on("click", function () {
+  if (confirm("Sign out from this account?")) document.location = "/signout";
+});
+
 //TODO: block another user edit different user edit data in client side
+// already finished in html element class define
 
 // get url query
 function getQueryVariable(variable) {
@@ -37,8 +43,10 @@ function getQueryVariable(variable) {
 // leaflets map
 let accessToken =
   "pk.eyJ1IjoiaW5ld3NrIiwiYSI6ImNrd3E2Ynh5cDBqcmMyb255NDQ3YW81NWEifQ.zs60MFn5-hrneP0Bsr7o9Q";
-let map = L.map("map").setView([22.3330432, 114.1401441], 12);
-let ourData = [];
+let map = L.map("map").setView(
+  [getQueryVariable("lat"), getQueryVariable("lng")],
+  11
+);
 
 L.tileLayer(
   `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,

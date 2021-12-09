@@ -1,13 +1,17 @@
 var multer = require("multer");
 
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads/img");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+// to store file locally
+// var storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "public/uploads/img");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
+
+// for get buffer into database only and process multipart form
+var storage = multer.memoryStorage();
 
 const upload = multer({ storage: storage });
 
