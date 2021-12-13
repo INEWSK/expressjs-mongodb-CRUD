@@ -4,6 +4,7 @@ const users = {};
 
 const accounts = [
   { username: "demo", password: "" },
+  { username: "student", password: "" },
   { username: "admin", password: "admin" },
   { username: "developer", password: "developer" },
   { username: "guest", password: "guest" },

@@ -80,6 +80,7 @@
     </tr>
     <% } %>
   </tbody>
+  <% if (doc.manager == currentUser) { %>
   <tfoot>
     <tr>
       <th></th>
@@ -102,5 +103,6 @@
       </th>
     </tr>
   </tfoot>
+  <% } %>
 </table>
 <% if (doc.manager == currentUser) { %> <% } %> <% }) %>
